@@ -1,0 +1,16 @@
+# Base project dependencies
+-r requirements.in
+
+# Dev & testing tools
+pytest
+pytest-cov
+jupyter
+plotly
+
+# Linting & formatting
+black
+flake8
+pre-commit
+
+# Dependency management
+pip-tools
