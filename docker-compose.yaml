@@ -1,0 +1,29 @@
+version: "3.11.11"
+
+services:
+  train-model:
+    build:
+      dockerfile: Dockerfile
+    image: prediction:${VERSION:-latest}
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+    working_dir: /app
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+    container_name: training_${ENVIRONMENT:-dev}
+    command: python src/train.py
+
+  daily-predict:
+    build:
+      dockerfile: Dockerfile
+    image: prediction:${VERSION:-latest}
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+    working_dir: /app
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+    container_name: prediction_${ENVIRONMENT:-dev}
+    command: >
+      sh -c "pytest && python src/predict.py"
