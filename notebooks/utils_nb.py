@@ -1,12 +1,11 @@
-# flake8: noqa
-import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
-from sklearn.metrics import mean_absolute_error
-import xgboost as xgb
-from statsmodels.tsa.stattools import adfuller
-import statsmodels.api as sm
-import plotly.graph_objects as go
 import numpy as np
+import pandas as pd
+import plotly.graph_objects as go
+import statsmodels.api as sm
+import xgboost as xgb
+from sklearn.metrics import mean_absolute_error
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.stattools import adfuller
 
 
 def fill_missing_hours(df: pd.DataFrame) -> pd.DataFrame:
