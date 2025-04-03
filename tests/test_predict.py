@@ -1,9 +1,10 @@
 # test_predict.py
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
 import xgboost as xgb
+
 from src.predict import Predicter
 
 

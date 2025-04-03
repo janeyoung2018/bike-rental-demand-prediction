@@ -1,9 +1,10 @@
 # test_train.py
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
 import xgboost as xgb
+
 from train import HorizonModelTrainer
 
 
