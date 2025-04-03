@@ -60,9 +60,8 @@ class Predicter:
 
         df_horizon = self.df_processed.copy()
         df_horizon = df_horizon.dropna().reset_index(drop=True)
-        logging.info(df_horizon.shape)
+        df_horizon = self.shift_weather_features(df_horizon, horizon)
         if not self.daily_infer:
-            df_horizon = self.shift_weather_features(df_horizon, horizon)
             df_horizon = self.create_target_cols(df_horizon, horizon)
             daily_rows = (
                 df_horizon[df_horizon["hr"] == 23].dropna().reset_index(drop=True)
@@ -80,7 +79,6 @@ class Predicter:
             logging.info(f"{target_col} MAE: {mae:.3f}")
         else:
             # assume we have the weather info of inference day, and the target values are unknown
-            df_horizon = self.shift_weather_features(df_horizon, horizon)
             daily_rows = df_horizon[df_horizon["hr"] == 23].reset_index(drop=True)
             daily_rows = daily_rows[daily_rows["dteday"] == self.daily_infer_dt]
             self.X_infer = daily_rows[params.feature_cols]
@@ -89,7 +87,9 @@ class Predicter:
                 np.round(self.y_pred).astype(int), a_min=0, a_max=None
             )
         if horizon == 1:
-            self.results = daily_rows
+            self.results = daily_rows[['dteday']].copy()
+        if not self.daily_infer:
+            self.results[f"{target_col}"] = self.y_infer
         self.results[f"{target_col}_pred"] = self.y_pred
 
     def predict_all_horizons(self, start=1, end=24):
@@ -127,7 +127,8 @@ class Predicter:
             output_data_path = Path(self.output_path) / "infer" / f"pred_{trw}.csv"
         else:
             output_data_path = Path(self.output_path) / "test" / f"pred_{trw}.csv"
-        self.results.to_csv(output_data_path)
+        self.results.to_csv(output_data_path, index=False)
+        logging.info(f"Results saved to {output_data_path}")
 
 
 if __name__ == "__main__":
