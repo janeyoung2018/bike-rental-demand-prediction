@@ -1,9 +1,10 @@
 # preprocessing.py
-# flake8: noqa
+
+import logging
 
 import pandas as pd
+
 from utils.config import Params as params
-import logging
 
 logging.basicConfig(
     format="%(asctime)s %(message)s", level=logging.INFO, datefmt="%Y-%m-%d %H:%M:%S"

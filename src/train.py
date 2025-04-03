@@ -1,20 +1,20 @@
 # train.py
-# flake8: noqa
 
-import pandas as pd
+import logging
+import os
+from argparse import ArgumentParser
+from datetime import date
+from pathlib import Path
+
 import numpy as np
+import pandas as pd
 import xgboost as xgb
-from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
 from sklearn.metrics import mean_absolute_error
+
 from preprocessing import preprocess_data
 from utils.config import Params as params
 from utils.utils import *
-import logging
-from datetime import date
-from pathlib import Path
-import os
-from argparse import ArgumentParser
-
 
 logging.basicConfig(
     format="%(asctime)s %(message)s", level=logging.INFO, datefmt="%Y-%m-%d %H:%M:%S"
