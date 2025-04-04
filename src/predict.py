@@ -87,7 +87,7 @@ class Predicter:
                 np.round(self.y_pred).astype(int), a_min=0, a_max=None
             )
         if horizon == 1:
-            self.results = daily_rows[['dteday']].copy()
+            self.results = daily_rows[["dteday"]].copy()
         if not self.daily_infer:
             self.results[f"{target_col}"] = self.y_infer
         self.results[f"{target_col}_pred"] = self.y_pred
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     )
     args.add_argument(
         "--test_cutoff_dt",
-        help="If daily inference is false, we are doing test evaluation, please provide the test cutoff date, e.g., '2021-11-08'",
+        help="Test mode if daily inference is False. Set cutoff date (e.g., '2021-11-08').",
         default="2012-10-01",
         type=str,
     )

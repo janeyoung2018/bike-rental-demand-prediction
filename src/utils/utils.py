@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def create_xgb_features(data):
     df_feat = data.copy()
     # add day in a month as feature
@@ -19,10 +16,3 @@ def create_xgb_features(data):
             df_feat.groupby("date_only")["cnt"].transform(agg).shift(24)
         )
     return df_feat
-
-
-def mae_objective(y_true, y_pred):
-    """Custom objective function for MAE."""
-    grad = np.sign(y_pred - y_true)
-    hess = np.ones_like(y_true)
-    return grad, hess

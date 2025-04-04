@@ -14,7 +14,7 @@ from sklearn.metrics import mean_absolute_error
 
 from preprocessing import preprocess_data
 from utils.config import Params as params
-from utils.utils import *
+from utils.utils import create_xgb_features
 
 logging.basicConfig(
     format="%(asctime)s %(message)s", level=logging.INFO, datefmt="%Y-%m-%d %H:%M:%S"
