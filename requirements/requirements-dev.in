@@ -12,3 +12,6 @@ matplotlib
 black
 flake8
 pre-commit
+
+# Dependency management
+ pip-tools
