@@ -6,11 +6,9 @@ pytest
 pytest-cov
 jupyter
 plotly
+matplotlib
 
 # Linting & formatting
 black
 flake8
 pre-commit
-
-# Dependency management
-pip-tools
