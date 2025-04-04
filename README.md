@@ -28,11 +28,10 @@ Dockerized services for reproducible and environment-independent execution
 
 ## Project Overview
 
-This project uses machine learning models (Linear Regression, Random Forest, XGBoost, etc.) to predict the total number of bikes rented in a given hour or day. It explores and engineers features like:
+This project uses machine learning models (XGBoost) to predict the total number of bikes rented in a given hour or day. It explores and engineers features like:
 
-- Weather: temperature, humidity, windspeed
-- Time-based: season, month, hour, weekday, holiday, working day
-- User type: casual vs. registered
+- Weather: weathersit, temperature, humidity, windspeed
+- Time-based: season, month, hour, weekday, working day
 
 ---
 
@@ -43,14 +42,12 @@ The data is sourced from the [UCI Machine Learning Repository](https://archive.i
 ```
 data/
 ├── hour.csv   # Hourly data
-├── day.csv    # Daily data
 ```
+---
 
 ## Setup
 
----
-
-### 1. **Create a Conda Environment
+### 1. **Create a Conda Environment**
 
 ```bash
 conda create -n myenv python=3.11.11
@@ -61,7 +58,7 @@ conda activate myenv
 
 ### 2. **Install Requirements**
 
-#### ➤ For Prediction Only
+### ➤ For Prediction Only
 
 Install only the minimal dependencies to run the trained model:
 
@@ -70,7 +67,7 @@ pip install -r requirements/requirements.txt
 ```
 ---
 
-#### ➤ For Full Development
+### ➤ For Full Development
 
 Includes all tools needed for development: training, testing, Jupyter notebooks, linting, formatting, and Git hooks.
 
@@ -80,7 +77,7 @@ Install the development dependencies:
 pip install -r requirements/requirements-dev.txt
 ```
 
-##### Updating Dependency Files
+#### Updating Dependency Files
 
 If you've changed `requirements.in` or `requirements-dev.in`, use [`pip-compile`](https://github.com/jazzband/pip-tools) to regenerate the pinned `.txt` files:
 
@@ -98,7 +95,7 @@ This ensures all dependencies (and their sub-dependencies) are locked with speci
 
 ---
 
-### 2.1 Verify Installation
+### Verify Installation
 
 Make sure everything was installed correctly:
 
@@ -109,7 +106,7 @@ pre-commit --version
 
 ---
 
-### 2.2 Set Up Pre-commit Hooks
+### Set Up Pre-commit Hooks
 
 To automatically run formatting and lint checks before each commit:
 
@@ -156,7 +153,7 @@ python predict.py --daily_infer True
 ```
 The results saved to `data/prediction/infer`
 
-The script will load the trained model and generate predictions based on the input features.
+The script will load the trained model and generate daily prediction based on the input features.
 
 ---
 
@@ -182,7 +179,6 @@ Example test file:
 tests/
 └── test_preprocessing.py
 ```
-
 ---
 
 ## Dockerized services
@@ -196,14 +192,24 @@ Each service automatically runs unit tests (using `pytest`) **before** executing
 
 ### Build Docker Images
 
-Build the Docker images using:
-
+To build the Docker images defined in your `docker-compose.yml`:
 ```bash
 docker compose build
 ```
 To rebuild without cache (clean install):
 ```bash
 docker compose build --no-cache
+```
+
+### Start the Full Application
+To build and start all services defined in the compose file:
+```bash
+docker compose up
+```
+
+### Stop and Clean Up
+```bash
+docker compose down
 ```
 
 ### Run Training
@@ -229,7 +235,7 @@ ENVIRONMENT=dev
 
 ## Jupyter Notebooks
 
-You can explore the EDA(Exploratory Data Analysis) in a Jupyter Notebook:
+You can explore the EDA(Exploratory Data Analysis) in a Jupyter Notebook (development mode, requirements-dev.txt needed to be installed):
 
 ```bash
 jupyter notebook notebooks/EDA.ipynb
