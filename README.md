@@ -68,14 +68,33 @@ Install only the minimal dependencies to run the trained model:
 ```bash
 pip install -r requirements/requirements.txt
 ```
+---
 
 #### ➤ For Full Development
 
-Includes tools for training, testing, notebooks, linting, formatting, and Git hooks:
+Includes all tools needed for development: training, testing, Jupyter notebooks, linting, formatting, and Git hooks.
+
+Install the development dependencies:
 
 ```bash
 pip install -r requirements/requirements-dev.txt
 ```
+
+##### Updating Dependency Files
+
+If you've changed `requirements.in` or `requirements-dev.in`, use [`pip-compile`](https://github.com/jazzband/pip-tools) to regenerate the pinned `.txt` files:
+
+```bash
+pip install pip-tools  # if not already installed
+
+# Compile base dependencies
+pip-compile requirements/requirements.in
+
+# Compile development dependencies
+pip-compile requirements/requirements-dev.in
+```
+
+This ensures all dependencies (and their sub-dependencies) are locked with specific versions for reproducibility.
 
 ---
 
